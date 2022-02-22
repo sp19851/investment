@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.1.0/dist/quasar.umd.prod.js" defer></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <title>Investment</title>
+</head>
+<body>
+    <div id="app"> 
+        <div class="main-container" v-show="show">
+            <div class="top">
+                <p class="top_text"> Инвестируй с нами, </p>
+                <p class="top_text"> инвестируй с умом</p>
+                
+            </div>
+            <div class="navi">
+                <div class="balance"><p style="margin-left: 15px;font-weight: bold; color:rgb(255, 255, 255);">Общая стоимость пакета акций  </p> <p class="dollar" style="transform: translateX(0.7vw);"> ${{total}}</p>
+                  
+                </div>
+                <button class="navi_item" @click="showingDiv('chart')">График</button>
+                <button class="navi_item" @click="showingDiv('stocks')"> Пакет</button>
+                <button @click="onClose" class="navi_item"> Выход</button>
+            </div>
+            <div class ="property" id="property" v-show="showProperty" >
+                <canvas id="my-chart" width="500" height="300"></canvas>
+            </div> 
+            <div class ="property" style=" font-size: 12px; background-color: rgba(15, 15, 15, 0.6);" id="stoks" v-show="showStocks" >
+                <div style="text-align: center; font-weight: bold;color:white;">Операции с акциями</div>
+                <div class="stocks" >
+                    <div v-for="item in stocks"  :key="item.name" >
+                        <div class="stocks_item">
+                            <div style="text-align: center; font-weight: bold;color:white;">{{item.name}}</div>
+                            <div class="dollar">Курс: ${{item.curs}}</div>
+                            <div class="dollar" >Пакет акций: {{item.amount}}</div>
+                            <input  style="width:80%;"  @change="onItemAmountChanged(item)"  type="range"  :max="item.amount" min="1" v-model="item.forsale"  @mouseover="onItemAmountChangedBefore(item)" @mouseout="disable = false" >
+                            <div class="navi_item" @click="onSale($event, item)">Продать {{item.forsale}} шт.</div>
+                            <div class="dollar" >Акций для покупки: {{item.freeamount}}</div>
+                            <input  style="width:80%;"  @change="onItemAmountChanged(item)"  type="range"  :max="item.freeamount" min="1" v-model="item.forbuy"  @mouseover="onItemAmountChangedBefore(item)" @mouseout="disable = false" >
+
+
+                            <div class="navi_item" @click="onBuy($event, item)">Купить {{item.forbuy}} шт.</div>
+                        </div>
+                    </div>
+                    <!--<div class="house_item">
+                        <div style="color:black;">{{chart_labels[1]}}</div>
+                        <div class="dollar">Курс: $</div>
+                        <div class="dollar" style="color: rgb(0, 47, 255);">Пакет акций:</div>
+                        <div class="dollar" style="color: rgb(11, 109, 139);">Акций для покупки:</div>
+                        <div class="navi_item" @click="onPay($event, item, 'business')">Оплатить</div>
+                    </div>
+                    <div class="house_item">
+                        <div style="color:black;">{{chart_labels[2]}}</div>
+                        <div class="dollar">Курс: $</div>
+                        <div class="dollar" style="color: rgb(0, 47, 255);">Пакет акций:</div>
+                        <div class="dollar" style="color: rgb(11, 109, 139);">Акций для покупки:</div>
+                        <div class="navi_item" @click="onPay($event, item, 'business')">Оплатить</div>
+                    </div>
+                    <div class="house_item">
+                        <div style="color:black;">{{chart_labels[3]}}</div>
+                        <div class="dollar">Курс: $</div>
+                        <div class="dollar" style="color: rgb(0, 47, 255);">Пакет акций:</div>
+                        <div class="dollar" style="color: rgb(11, 109, 139);">Акций для покупки:</div>
+                        <div class="navi_item" @click="onPay($event, item, 'business')">Оплатить</div>
+                    </div>
+                    <div class="house_item">
+                        <div style="color:black;">{{chart_labels[4]}}</div>
+                        <div class="dollar">Курс: $</div>
+                        <div class="dollar" style="color: rgb(0, 47, 255);">Пакет акций:</div>
+                        <div class="dollar" style="color: rgb(11, 109, 139);">Акций для покупки:</div>
+                        <div class="navi_item" @click="onPay($event, item, 'business')">Оплатить</div>
+                    </div> -->
+                </div>
+            </div>   
+        </div>
+    </div>
+    
+</body>
+<script src="./js/app.js"></script>  
+
+</html>
