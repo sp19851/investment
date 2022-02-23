@@ -1,5 +1,8 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
+local fakecompany = nil 
+local fakecurs = nil
+local infake = false
 
 local function investment_server_setdata()
     print('investment table updating...')
@@ -74,6 +77,256 @@ local function investment_server_setdata()
     Citizen.Wait(500)
     TriggerClientEvent('investment:client:update', -1)
 end
+
+local function investment_server_getFakedata(src, type)
+    print('investment_server_getFakedata', src, type, fakecompany, fakecurs)
+    local Player = QBCore.Functions.GetPlayer(src)
+    local TotalTax = 0 
+    --fakecompany = fakecompany
+    --fakecurs = fakecurs
+    --property--
+    --house--
+    local today = os.date('%x', os.time())
+    local today_1 = os.date('%x', os.time()-24*60*60)
+    local today_2 = os.date('%x', os.time()-48*60*60)
+    local today_3 = os.date('%x', os.time()-72*60*60)
+    local today_4 = os.date('%x', os.time()-96*60*60)
+    local today_5 = os.date('%x', os.time()-120*60*60)
+    local today_6 = os.date('%x', os.time()-144*60*60)
+   
+    local result = exports.oxmysql:fetchSync('SELECT * FROM `investments` where datelabel = ? LIMIT 7', {today_6})
+    local table6 = {}
+    -- chart_labels : ['Сеть магазинов 24/7', 'Lifeinvader', 'Rogers Salvage&Scrap', 'Grand Banks Steel Inc Foundry', 'Humane Labs and Research'],
+
+    if result ~= nil then
+        for i, v in pairs(result) do
+            if v.company == 'Сеть магазинов 24/7' then
+                table6[1] = v.curs
+            elseif v.company == 'Lifeinvader' then
+                    table6[2] = v.curs
+            elseif v.company == 'Rogers Salvage&Scrap' then
+                table6[3] = v.curs
+            elseif v.company == 'Grand Banks Steel Inc Foundry' then
+                table6[4] = v.curs
+            else
+                table6[5] = v.curs
+            end
+        end
+    end
+
+    local result = exports.oxmysql:fetchSync('SELECT * FROM `investments` where datelabel = ? LIMIT 7', {today_5})
+    local table5 = {}
+    
+    if result ~= nil then
+        for i, v in pairs(result) do
+            if v.company == 'Сеть магазинов 24/7' then
+                table5[1] = v.curs
+            elseif v.company == 'Lifeinvader' then
+                table5[2] = v.curs
+            elseif v.company == 'Rogers Salvage&Scrap' then
+                table5[3] = v.curs
+            elseif v.company == 'Grand Banks Steel Inc Foundry' then
+                table5[4] = v.curs
+            else
+                table5[5] = v.curs
+            end
+        end
+    end
+
+    local result = exports.oxmysql:fetchSync('SELECT * FROM `investments` where datelabel = ? LIMIT 7', {today_4})
+    local table4 = {}
+    
+    if result ~= nil then
+        for i, v in pairs(result) do
+            if v.company == 'Сеть магазинов 24/7' then
+                table4[1] = v.curs
+            elseif v.company == 'Lifeinvader' then
+                table4[2] = v.curs
+            elseif v.company == 'Rogers Salvage&Scrap' then
+                table4[3] = v.curs
+            elseif v.company == 'Grand Banks Steel Inc Foundry' then
+                table4[4] = v.curs
+            else
+                table4[5] = v.curs
+            end
+        end
+    end
+
+    local result = exports.oxmysql:fetchSync('SELECT * FROM `investments` where datelabel = ? LIMIT 7', {today_3})
+    local table3 = {}
+    
+    if result ~= nil then
+        for i, v in pairs(result) do
+            if v.company == 'Сеть магазинов 24/7' then
+                table3[1] = v.curs
+            elseif v.company == 'Lifeinvader' then
+                table3[2] = v.curs
+            elseif v.company == 'Rogers Salvage&Scrap' then
+                table3[3] = v.curs
+            elseif v.company == 'Grand Banks Steel Inc Foundry' then
+                table3[4] = v.curs
+            else
+                table3[5] = v.curs
+            end
+        end
+    end
+
+    local result = exports.oxmysql:fetchSync('SELECT * FROM `investments` where datelabel = ? LIMIT 7', {today_2})
+    local table2 = {}
+    
+    if result ~= nil then
+        for i, v in pairs(result) do
+            if v.company == 'Сеть магазинов 24/7' then
+                table2[1] = v.curs
+            elseif v.company == 'Lifeinvader' then
+                table2[2] = v.curs
+            elseif v.company == 'Rogers Salvage&Scrap' then
+                table2[3] = v.curs
+            elseif v.company == 'Grand Banks Steel Inc Foundry' then
+                table2[4] = v.curs
+            else
+                table2[5] = v.curs
+            end
+        end
+    end
+
+    local result = exports.oxmysql:fetchSync('SELECT * FROM `investments` where datelabel = ? LIMIT 7', {today_1})
+    local table1 = {}
+    
+    if result ~= nil then
+        for i, v in pairs(result) do
+            if v.company == 'Сеть магазинов 24/7' then
+                table1[1] = v.curs
+            elseif v.company == 'Lifeinvader' then
+                table1[2] = v.curs
+            elseif v.company == 'Rogers Salvage&Scrap' then
+                table1[3] = v.curs
+            elseif v.company == 'Grand Banks Steel Inc Foundry' then
+                table1[4] = v.curs
+            else
+                table1[5] = v.curs
+            end
+        end
+    end
+
+    local result = exports.oxmysql:fetchSync('SELECT * FROM `investments` where datelabel = ? LIMIT 7', {today})
+    local table = {}
+    
+    if result ~= nil then
+        for i, v in pairs(result) do
+            --print('216', i, v.company)
+            if v.company == 'Сеть магазинов 24/7' then
+               
+                if fakecompany ~= v.company then
+                    table[1] = v.curs
+                else
+                    table[1] = fakecurs
+                    --TriggerClientEvent("QBCore:Notify", -1, 'Новости с биржи. Произошел обвал акций компании "' ..fakecompany..'"', "error", 15000)
+                end
+            elseif v.company == 'Lifeinvader' then
+                if fakecompany ~= v.company then
+                    table[2] = v.curs
+                else
+                    table[2] = fakecurs
+                    --TriggerClientEvent("QBCore:Notify", -1, 'Новости с биржи. Произошел обвал акций компании "' ..fakecompany..'"', "error", 15000)
+                end
+            elseif v.company == 'Rogers Salvage&Scrap' then
+                if fakecompany ~= v.company then
+                    table[3] = v.curs
+                else
+                    table[3] = fakecurs
+                    --TriggerClientEvent("QBCore:Notify", -1, 'Новости с биржи. Произошел обвал акций компании "' ..fakecompany..'"', "error", 15000)
+                end
+            elseif v.company == 'Grand Banks Steel Inc Foundry' then
+                if fakecompany ~= v.company then
+                    table[4] = v.curs
+                else
+                    table[4] = fakecurs
+                    --TriggerClientEvent("QBCore:Notify", -1, 'Новости с биржи. Произошел обвал акций компании "' ..fakecompany..'"', "error", 15000)
+                end
+            else
+                if fakecompany ~= v.company then
+                    table[5] = v.curs
+                else
+                    table[5] = fakecurs
+                    --TriggerClientEvent("QBCore:Notify", -1, 'Новости с биржи. Произошел обвал акций компании "' ..fakecompany..'"', "error", 15000)
+                end
+            end
+        end
+    end
+
+
+
+
+    --[[local _247 = exports.oxmysql:fetchSync('SELECT * FROM `investment` where company = ? order by id desc LIMIT 7', {'Сеть магазинов 24/7'})
+    local _247data = {}
+    local tempdataset = {}
+    local templabel = {}
+    for i, v in pairs(_247) do
+        --print(i, '-', json.encode(v))
+        --print(os.time(v.date))
+        local d = os.date('%x',  math.ceil(v.date))
+        --print(math.ceil(v.date), d,  os.date('%x', math.ceil(v.date)))
+        templabel[i] = {os.date('%x',v.date)}
+        tempdataset[i] = {v.curs}
+    end
+    
+   ]]
+   --{name: "Сеть магазинов 24/7", curs: 5000, amount: 0, freeamount: 900, totalamount: 1000, forsale:0, forbuy:0},
+
+    local stocks  = {}
+    local total = 0
+    local result2 =  exports.oxmysql:fetchSync('SELECT * FROM investment')
+  
+    if result2 ~= nil then 
+        for i,v in pairs(result2) do
+            print(i, json.encode(v))
+            local result =  exports.oxmysql:fetchSync('SELECT * FROM players_stocks where citizenid = ? and company = ?', {Player.PlayerData.citizenid, v.company})
+            local curs = 0
+            local free_amount = 0
+            local all_amount = 0
+            local amount = 0
+            if v.curs ~= nil then 
+                --print('fakecompany', fakecompany, v.company)
+                --print('fakecurs', fakecurs, v.curs)
+                if v.company ~= fakecompany then
+                    curs = v.curs 
+                else
+                    curs = fakecurs
+                end
+            end
+            free_amount = v.free_amount
+            all_amount = v.all_amount
+            if result[1] ~= nil then 
+                if result[1].amount ~= nil then amount = result[1].amount end
+                total = total + curs * amount
+            end
+            stocks[#stocks+1] = {name = v.company, curs = curs, amount = amount, freeamount = free_amount, totalamount = all_amount, totalamount =  1000, forsale = 0, forbuy = 0}
+            --freeamount: 708, totalamount: 1000, forsale:0, forbuy:0
+        end
+    end
+
+    print('***', json.encode(stocks))
+    print('***', json.encode(table))
+    TriggerClientEvent('investment:client:getdata', src, type, table6, today_6, table5, today_5, table4, today_4, table3, today_3, table2, today_2, table1, today_1, table, today, stocks, total)
+end
+
+local function investment_server_setFakedata(src, company, percent)
+    print('investment fake table updating...')
+    fakecompany = company
+    --local fakecurs = nil
+    local curs = exports.oxmysql:fetchSync('SELECT curs FROM `investment` where company = ?', {fakecompany})
+    if curs ~= nil and curs[1] ~= nil then
+        print(curs[1].curs, percent)
+        fakecurs = curs[1].curs - (curs[1].curs * (tonumber(percent)/100))
+        TriggerClientEvent("QBCore:Notify", -1, 'Новости с биржи. Произошел обвал акций компании "' ..fakecompany..'"', "error", 15000)
+
+
+    end
+    investment_server_getFakedata(src, 'refresh')
+end
+
+
 
 local function investment_server_getdata(src, type)
     local Player = QBCore.Functions.GetPlayer(src)
@@ -272,7 +525,11 @@ end
 RegisterServerEvent('investment:server:getdata')
 AddEventHandler('investment:server:getdata', function(type)
     local src = source
-    investment_server_getdata(src, type)
+    if not infake then
+        investment_server_getdata(src, type)
+    else
+        investment_server_getFakedata(src, type)
+    end
    
 end)
 
@@ -333,6 +590,68 @@ AddEventHandler('investment:server:buy', function(data)
     end
    
 end)
+
+
+RegisterServerEvent('investment:server:getTablet')
+AddEventHandler('investment:server:getTablet', function()
+    local src = source
+    local canBuy = false
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player.PlayerData.money.bank >= Config.blackBrokerPrice then
+        Player.Functions.RemoveMoney('bank', Config.blackBrokerPrice)
+        canBuy = true
+    end
+    if Player.PlayerData.money.bank >= Config.blackBrokerPrice then
+        Player.Functions.RemoveMoney('cash', Config.blackBrokerPrice)
+        canBuy = true
+    end
+    if canBuy then 
+        Player.Functions.AddItem('tablet', 1)
+        TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['tablet'], "add")
+    else
+        TriggerClientEvent('QBCore:Notify', src, 'У вас нехватает средств ($' ..Config.blackBrokerPrice..')', "error", 3500)
+    end
+end)
+
+RegisterServerEvent('investment:server:HackStocksCurs')
+AddEventHandler('investment:server:HackStocksCurs', function(data)
+    
+    local src = source
+    local canBuy = false
+    local Player = QBCore.Functions.GetPlayer(src)
+    for i,v in pairs(data) do
+        print(i, json.encode(v))
+    end
+    if Player.PlayerData.money.bank >= data.price then
+        Player.Functions.RemoveMoney('bank', data.price)
+        canBuy = true
+    end
+    if Player.PlayerData.money.bank >= data.price then
+        Player.Functions.RemoveMoney('cash', data.price)
+        canBuy = true
+    end
+    if canBuy then 
+        investment_server_setFakedata(src, data.company, data.percent)
+        infake = true
+        SetTimeout(Config.hackStocksPeriod, function()
+            infake = false;
+            TriggerClientEvent("QBCore:Notify", -1, 'Новости с биржи. Курс акций компании "' ..fakecompany..' восстановился"', "success", 5000);
+            fakecompany = nil
+            fakecurs = nil
+            TriggerClientEvent("investment:client:UIForceClose", -1)
+        end)
+      
+    else
+        TriggerClientEvent('QBCore:Notify', src, 'У вас нехватает средств ($' ..data.price..')', "error", 3500)
+    end
+end)
+
+
+QBCore.Functions.CreateUseableItem("tablet", function(source, item)
+    local Player = QBCore.Functions.GetPlayer(source)
+    TriggerClientEvent("investment:client:UseTablet", source)
+end)
+
 
 Citizen.CreateThread(function()
     while true do

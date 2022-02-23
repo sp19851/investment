@@ -173,7 +173,7 @@ const App = {
 
 
             } else if(event.data.action === 'close') {
-                onClose()
+                this.onClose()
             } else if(event.data.action === 'refresh') {
                 /*for(let i = 0; i < this.employees.length; i++) {
                     let Item = this.employees[i];

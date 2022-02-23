@@ -12,26 +12,7 @@ Config.Blip = {
 
 Config.investmentPeriod = 60000*60*24 --сутки
 
-
-Config.ShopBoats = {
-    ["dinghy"] = {
-        ["model"] = "dinghy",
-        ["label"] = "Dinghy",
-        ["price"] = 15000
-    },
-    ["speeder"] = {
-        ["model"] = "speeder",
-        ["label"] = "Speeder",
-        ["price"] = 20000
-    },
-    ["marquis"] = {
-        ["model"] = "marquis",
-        ["label"] = "Marquis",
-        ["price"] = 30000
-    },
-    ["seashark"] = {
-        ["model"] = "seashark",
-        ["label"] = "Seashark",
-        ["price"] = 10000
-    }
-}
+Config.black_broker_coords = vector4(-2229.52, 243.53, 174.6, 225.0)
+Config.black_broker_ped = 'cs_solomon'
+Config.blackBrokerPrice = 650
+Config.hackStocksPeriod = 60000*15
